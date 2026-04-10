@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MENU VERTICAL | BARRA LENTA - MESMA RETA</title>
+    <style>
+        /* RESET COMPLETO - FUNDO PRETO ABSOLUTO */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* FUNDO PRETO TOTAL - SEM NADA EM VOLTA, APENAS AS LETRAS */
+        body {
+            background-color: #000000;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', 'Inter', 'Helvetica Neue', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            padding: 2rem;
+        }
+
+        /* CONTAINER CENTRALIZADOR - FUNDO TRANSPARENTE */
+        .menu-container {
+            background: transparent;
+            width: 100%;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        /* MENU VERTICAL - LISTA PURA, UMA ABAIXO DA OUTRA */
+        .vertical-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+            width: 100%;
+        }
+
+        /* ESTILO BASE DOS ITEMS - LETRAS MAIORES E ESTICADAS VERTICALMENTE */
+        /* TODAS AS PALAVRAS NA MESMA RETA (ALINHADAS À ESQUERDA) */
+        .menu-item {
+            text-decoration: none;
+            display: inline-block;
+            font-size: 3.5rem;
+            font-weight: 900;
+            font-family: 'Segoe UI', 'Inter', 'Helvetica Neue', sans-serif;
+            text-transform: uppercase;
+            color: #808080;              /* CINZA INICIAL */
+            background: transparent;
+            position: relative;
+            padding: 0.5rem 0;
+            padding-left: 25px;          /* ESPAÇO PARA A BARRA FICAR MAIS DISTANTE DA PALAVRA */
+            padding-right: 10px;
+            width: auto;
+            letter-spacing: 2px;
+            /* ESTICANDO AS LETRAS VERTICALMENTE */
+            transform: scaleY(1.2);
+            transform-origin: left center;
+            line-height: 1.2;
+            text-align: left;
+        }
+
+        /* BARRA VERTICAL VISÍVEL (FINA E AZUL) - MAIS DISTANTE DA PALAVRA */
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;                 /* LARGURA DA BARRA */
+            height: 100%;               /* ALTURA TOTAL DA PALAVRA */
+            background-color: #7bc5f5;  /* AZUL CLARO */
+            transition: left 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            z-index: 1;
+            border-radius: 2px;
+        }
+
+        /* EFEITO HOVER: A BARRA DESLIZA DA ESQUERDA PARA A DIREITA 
+           ATÉ CHEGAR NO FINAL DA PALAVRA */
+        .menu-item:hover::before {
+            left: calc(100% - 4px);     /* BARRA VAI PARA O FINAL DA PALAVRA */
+        }
+
+        /* MUDANÇA DE COR DO TEXTO: USANDO GRADIENTE NO BACKGROUND DO TEXTO */
+        .menu-item {
+            background-image: linear-gradient(90deg, #7bc5f5, #7bc5f5);
+            background-repeat: no-repeat;
+            background-size: 0% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            transition: background-size 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        /* NO HOVER: O GRADIENTE SE EXPANDE DA ESQUERDA PARA A DIREITA,
+           FAZENDO O TEXTO FICAR AZUL GRADUALMENTE */
+        .menu-item:hover {
+            background-size: 100% 100%;
+            color: #7bc5f5;
+        }
+
+        /* PARA GARANTIR QUE TODAS AS PALAVRAS FIQUE NA MESMA RETA (COLUNA PERFEITA) */
+        li {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* GARANTIR POSICIONAMENTO RELATIVO */
+        .menu-item {
+            position: relative;
+            background-color: transparent !important;
+        }
+
+        /* GARANTIR QUE O TEXTO FIQUE LEGÍVEL */
+        .menu-item {
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        /* ACESSIBILIDADE E FOCO */
+        .menu-item:focus-visible {
+            outline: 2px solid #7bc5f5;
+            outline-offset: 8px;
+            border-radius: 2px;
+        }
+
+        .menu-item:focus-visible::before {
+            left: calc(100% - 4px);
+        }
+        
+        .menu-item:focus-visible {
+            background-size: 100% 100%;
+            color: #7bc5f5;
+        }
+
+        /* RESPONSIVIDADE - AJUSTE PARA TELAS MENORES */
+        @media (max-width: 768px) {
+            .menu-item {
+                font-size: 2.8rem;
+                transform: scaleY(1.15);
+                padding-left: 22px;
+                padding-right: 8px;
+            }
+            .vertical-menu {
+                gap: 1.4rem;
+            }
+            .menu-item::before {
+                width: 3.5px;
+            }
+            .menu-item:hover::before {
+                left: calc(100% - 3.5px);
+            }
+        }
+
+        @media (max-width: 550px) {
+            .menu-item {
+                font-size: 2rem;
+                transform: scaleY(1.1);
+                letter-spacing: 1px;
+                padding-left: 18px;
+                padding-right: 6px;
+            }
+            .vertical-menu {
+                gap: 1.2rem;
+            }
+            .menu-item::before {
+                width: 3px;
+            }
+            .menu-item:hover::before {
+                left: calc(100% - 3px);
+            }
+        }
+
+        @media (max-width: 400px) {
+            .menu-item {
+                font-size: 1.5rem;
+                transform: scaleY(1.05);
+                letter-spacing: 0.5px;
+                padding-left: 14px;
+                padding-right: 5px;
+            }
+            .vertical-menu {
+                gap: 1rem;
+            }
+            .menu-item::before {
+                width: 2.5px;
+            }
+            .menu-item:hover::before {
+                left: calc(100% - 2.5px);
+            }
+        }
+
+        /* GARANTIR FUNDO 100% PRETO */
+        html {
+            background-color: #000000;
+        }
+
+        /* ESTILO PARA LINKS VISITADOS - MANTÉM O CINZA INICIAL */
+        .menu-item:visited {
+            color: #808080;
+        }
+
+        /* REMOVER QUALQUER DECORAÇÃO EXTRA */
+        a {
+            text-decoration: none;
+        }
+
+        /* GARANTIR QUE NENHUM BACKGROUND APAREÇA */
+        .menu-item:hover, 
+        .menu-item:active, 
+        .menu-item:focus {
+            background-color: transparent !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <ul class="vertical-menu">
+            <!-- CADA PALAVRA UMA EM BAIXO DA OUTRA, CAIXA ALTA, LETRAS ESTICADAS -->
+            <!-- TODAS AS PALAVRAS NA MESMA RETA (ALINHADAS À ESQUERDA) -->
+            <!-- A BARRA FICA MAIS DISTANTE DA PALAVRA (padding-left) -->
+            <!-- AS LETRAS FICAM AZUIS QUANDO A BARRA PASSA -->
+            <li><a href="pagina-dashboard.html" class="menu-item" target="_self" rel="noopener noreferrer">DASHBOARD</a></li>
+            <li><a href="pagina-perfil.html" class="menu-item" target="_self" rel="noopener noreferrer">MEU PERFIL</a></li>
+            <li><a href="pagina-configuracoes.html" class="menu-item" target="_self" rel="noopener noreferrer">CONFIGURAÇÕES</a></li>
+            <li><a href="pagina-ajuda.html" class="menu-item" target="_self" rel="noopener noreferrer">AJUDA E SUPORTE</a></li>
+            <li><a href="pagina-projetos.html" class="menu-item" target="_self" rel="noopener noreferrer">PROJETOS</a></li>
+            <li><a href="pagina-contato.html" class="menu-item" target="_self" rel="noopener noreferrer">CONTATO</a></li>
+        </ul>
+    </div>
+
+    <script>
+        console.log("=== MENU - VELOCIDADE MAIS LENTA (1.2s) - MESMA RETA ===");
+        console.log("✓ TODAS AS PALAVRAS NA MESMA RETA (ALINHADAS À ESQUERDA)");
+        console.log("✓ BARRA VERTICAL AZUL VISÍVEL (4px de largura)");
+        console.log("✓ BARRA FICA MAIS DISTANTE DA PALAVRA (espaçamento à esquerda)");
+        console.log("✓ BARRA DESLIZA DA ESQUERDA PARA A DIREITA (velocidade: 1.2 segundos)");
+        console.log("✓ AO TIRAR O MOUSE, A BARRA RETORNA LENTAMENTE (1.2s)");
+        console.log("✓ AS LETRAS FICAM AZUIS QUANDO A BARRA PASSA");
+        console.log("✓ SEM SOBREPOSIÇÃO DE TEXTOS - APENAS A COR DAS LETRAS MUDA");
+        console.log("✓ LETRAS ESTICADAS VERTICALMENTE E EM CAIXA ALTA");
+        console.log("✓ FUNDO PRETO ABSOLUTO");
+        console.log("✓ REDIRECIONAMENTO DE PÁGINA AO CLICAR");
+    </script>
+</body>
+</html>
